@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.classList.add("dark");
+        }
+    </script>
+    <style>
+        .transition { transition: all 0.3s ease-in-out; }
+        .dark .dark-bg { background-color: #121212; color: #ffffff; }
+        .light-bg { background-color: #ffffff; color: #000000; }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="light-bg dark:dark-bg transition">
+    <nav class="bg-white dark:bg-gray-800 fixed top-0 left-0 w-full shadow-md p-4 z-50 text-black dark:text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold"></h1>
+            <ul class="flex space-x-6">
+                <li><a href="#hero" class="hover:text-blue-500">Home</a></li>
+                <li><a href="#features" class="hover:text-blue-500">Features</a></li>
+                <li><a href="#contact" class="hover:text-blue-500">Contact</a></li>
+            </ul>
+            <button id="darkModeToggle" class="p-2 bg-gray-200 dark:bg-gray-700 rounded-md">🌙</button>
+        </div>
+    </nav>
+
+    <section id="hero" class="h-screen flex items-center justify-center bg-cover bg-center text-center relative text-black dark:text-white" style="background-image: url('https://source.unsplash.com/1600x900/?technology');">
+        <div class="bg-black bg-opacity-60 p-10 rounded-lg">
+            <h2 class="text-5xl font-extrabold mb-4">Let's make the change.</h2>
+            <p class="mb-6 text-lg">Empowering innovation with digital solutions.</p>
+            <button class="bg-blue-500 px-6 py-3 rounded-full font-bold hover:bg-blue-700 transition">Get Started</button>
+        </div>
+    </section>
+
+    <section id="features" class="py-16 container mx-auto text-black dark:text-white">
+        <h2 class="text-4xl font-bold text-center mb-10" style="color: #333;">Why Choose Us?</h2>
+        <div class="grid md:grid-cols-3 gap-8 text-center">
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition transform hover:scale-105">
+                <h3 class="text-xl font-semibold mt-4">Faster than ever</h3>
+                <p class="mt-2">Optimized for speed to enhance your experience.</p>
+            </div>
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition transform hover:scale-105">
+                <h3 class="text-xl font-semibold mt-4">Best Security</h3>
+                <p class="mt-2">Your data is safeguarded with cutting-edge protection.</p>
+            </div>
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition transform hover:scale-105">
+                <h3 class="text-xl font-semibold mt-4">Always Available</h3>
+                <p class="mt-2">24*7 available for your need.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 bg-gray-200 dark:bg-gray-900 text-black dark:text-white transition">
+        <div class="container mx-auto max-w-lg bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold text-center mb-6">Let’s Connect</h2>
+            <form id="contactForm">
+                <div class="mb-4">
+                    <input type="text" id="name" placeholder="Your Name" class="w-full p-2 border rounded focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                </div>
+                <div class="mb-4">
+                    <input type="email" id="email" placeholder="Your Email" class="w-full p-2 border rounded focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                </div>
+                <div class="mb-4">
+                    <textarea id="message" placeholder="Your Message" class="w-full p-2 border rounded focus:ring-blue-500 dark:bg-gray-700 dark:text-white" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">Send</button>
+            </form>
+            <p id="successMessage" class="text-green-500 text-center mt-4 hidden">Message sent successfully!</p>
+        </div>
+    </section>
+
+    <script>
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const contactForm = document.getElementById("contactForm");
+        const successMessage = document.getElementById("successMessage");
+
+        function setDarkMode(enabled) {
+            if (enabled) {
+                document.documentElement.classList.add("dark");
+                document.body.classList.add("dark-bg");
+                document.body.classList.remove("light-bg");
+                localStorage.setItem("theme", "dark");
+                darkModeToggle.innerText = "☀️";
+            } else {
+                document.documentElement.classList.remove("dark");
+                document.body.classList.add("light-bg");
+                document.body.classList.remove("dark-bg");
+                localStorage.setItem("theme", "light");
+                darkModeToggle.innerText = "🌙";
+            }
+        }
+
+        if (localStorage.getItem("theme") === "dark") {
+            setDarkMode(true);
+        }
+
+        darkModeToggle.addEventListener("click", () => {
+            setDarkMode(!document.documentElement.classList.contains("dark"));
+        });
+
+        contactForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            successMessage.classList.remove("hidden");
+            contactForm.reset();
+            setTimeout(() => {
+                successMessage.classList.add("hidden");
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
